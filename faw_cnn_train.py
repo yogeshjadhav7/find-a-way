@@ -22,7 +22,7 @@ for n_episode in range(N_EPISODES):
     print("\nPlaying episode #" + str(n_episode))
     features = []
     labels = []
-    games = faw.find_valid_game_grids(grid_size=faw.GRID_SIZE, games_count=25)
+    games = faw.find_valid_game_grids(grid_size=faw.GRID_SIZE, games_count=10)
     for game_indx in range(len(games)): 
         game = games[game_indx]
         faw.simulate(grid=game, features=features, labels=labels)
