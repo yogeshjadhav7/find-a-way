@@ -8,13 +8,13 @@ import numpy as np
 from faw import FindAWay
 
 
-# In[2]:
+# In[ ]:
 
 
 faw = FindAWay()
 
 
-# In[4]:
+# In[ ]:
 
 
 N_EPISODES = 100
@@ -26,11 +26,11 @@ for n_episode in range(N_EPISODES):
     for game_indx in range(len(games)): 
         game = games[game_indx]
         faw.simulate(grid=game, features=features, labels=labels)
-        if game_indx % 5 == 0: faw.STATE_RESPONSES_INFO_STORE = {}
+        #if game_indx % 5 == 0: faw.STATE_RESPONSES_INFO_STORE = {}
 
-    faw.STATE_RESPONSES_INFO_STORE = {}
-    faw.VALID_MOVES_INFO_STORE = {}
-    faw.GAMES_STORE = {}
+    #faw.STATE_RESPONSES_INFO_STORE = {}
+    #faw.VALID_MOVES_INFO_STORE = {}
+    #faw.GAMES_STORE = {}
     
     model_name, model = faw.load_model()
     model_name, model = faw.train_model(model_name=model_name, model=model, features=features, labels=labels, verbose=0)
