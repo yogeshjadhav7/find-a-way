@@ -22,7 +22,7 @@ for n_episode in range(N_EPISODES):
     print("\nPlaying episode #" + str(n_episode))
     features = []
     labels = []
-    games = faw.find_valid_game_grids(grid_size=faw.GRID_SIZE, games_count=20)
+    games = faw.find_valid_game_grids(grid_size=faw.GRID_SIZE, games_count=25)
     for game_indx in range(len(games)): 
         game = games[game_indx]
         faw.simulate(grid=game, features=features, labels=labels)
@@ -33,7 +33,7 @@ for n_episode in range(N_EPISODES):
     faw.GAMES_STORE = {}
     
     model_name, model = faw.load_model()
-    model_name, model = faw.train_model(model_name=model_name, model=model, features=features, labels=labels)
+    model_name, model = faw.train_model(model_name=model_name, model=model, features=features, labels=labels, verbose=0)
     loss, accuracy = faw.evaluate(model_name=model_name, model=model, features=features, labels=labels)
     print("Loss", loss)
     print("Accuracy", accuracy)
