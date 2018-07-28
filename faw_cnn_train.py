@@ -18,7 +18,7 @@ faw = FindAWay()
 
 
 N_EPISODES = 100
-for n_episode in ranges(N_EPISODES):
+for n_episode in range(N_EPISODES):
     print("\nPlaying episode #" + str(n_episode))
     features = []
     labels = []
