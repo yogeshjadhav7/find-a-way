@@ -26,7 +26,7 @@ for n_episode in range(N_EPISODES):
     for game_indx in range(len(games)): 
         game = games[game_indx]
         faw.simulate(grid=game, features=features, labels=labels)
-        if game_indx % 3 == 0: 
+        if game_indx % 5 == 0: 
             faw.STATE_RESPONSES_INFO_STORE = {}
             faw.VALID_MOVES_INFO_STORE = {}
 
