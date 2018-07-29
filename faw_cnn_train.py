@@ -18,19 +18,20 @@ faw = FindAWay()
 
 
 N_EPISODES = 100
+
+n_blocked_cells_min = 2
+
 for n_episode in range(N_EPISODES):
-    print("\nPlaying episode #" + str(n_episode))
+    print("\n\nPlaying episode #" + str(n_episode))
     features = []
     labels = []
-    games = faw.find_valid_game_grids(grid_size=faw.GRID_SIZE, games_count=25)
-    for game_indx in range(len(games)): 
-        game = games[game_indx]
-        faw.simulate(grid=game, features=features, labels=labels)
-        if game_indx % 5 == 0: 
-            faw.STATE_RESPONSES_INFO_STORE = {}
-            faw.VALID_MOVES_INFO_STORE = {}
-
-    #faw.GAMES_STORE = {}
+    games_counter = 0
+    games_count = 25
+    
+    while games_counter < games_count: 
+        seed_game = faw.random_initialize_grid()
+        games_counter += faw.create_all_game_grids(seed_grid=seed_game, grid_size=faw.GRID_SIZE, features=features, labels=labels, games_count=games_count)
+        print("games_counter", games_counter)
     
     model_name, model = faw.load_model()
     model_name, model = faw.train_model(model_name=model_name, model=model, features=features, labels=labels, verbose=0)
