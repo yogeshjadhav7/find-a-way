@@ -18,7 +18,7 @@ faw = FindAWay()
 
 
 N_EPISODES = 100
-N_GAMES_PER_EPISODE = 1000
+N_GAMES_PER_EPISODE = 100
 verbose = 0
 
 for n_episode in range(N_EPISODES):
@@ -29,9 +29,10 @@ for n_episode in range(N_EPISODES):
     lost = 0
     won = 0
     for n_game in range(N_GAMES_PER_EPISODE):
-        grid = faw.random_initialize_grid()
+        grid = faw.random_initialize_grid(n_blocked_cells=1)
         trackrecord = []
         faw.simulate(grid=grid, model=model, trackrecord=trackrecord, verbose=verbose)
+        if len(trackrecord) == 0: continue
         (final_grid, _, _)  = trackrecord[len(trackrecord) - 1]
         
         if faw.is_game_won(grid=final_grid): won += 1
@@ -39,7 +40,6 @@ for n_episode in range(N_EPISODES):
         
         if verbose == 1: print(final_grid)
         features_game, labels_game = faw.extract_features_labels(final_grid=final_grid, trackrecord=trackrecord)
-        if len(features_game) == 0: continue
                 
         if len(features) == 0:
             features = features_game
