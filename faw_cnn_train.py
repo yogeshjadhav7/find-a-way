@@ -18,24 +18,41 @@ faw = FindAWay()
 
 
 N_EPISODES = 100
-
-n_blocked_cells_min = 2
+N_GAMES_PER_EPISODE = 100
+verbose = 0
 
 for n_episode in range(N_EPISODES):
-    print("\n\nPlaying episode #" + str(n_episode))
+    print("\n\n\nN_EPISODE: ", n_episode)
+    model_name, model = faw.load_model()
     features = []
     labels = []
-    games_counter = 0
-    games_count = 25
+    lost = 0
+    won = 0
+    for n_game in range(N_GAMES_PER_EPISODE):
+        grid = faw.random_initialize_grid()
+        trackrecord = []
+        faw.simulate(grid=grid, model=model, trackrecord=trackrecord, verbose=verbose)
+        (final_grid, _, _)  = trackrecord[len(trackrecord) - 1]
+        
+        if faw.is_game_won(grid=final_grid): won += 1
+        else lost += 1
+        
+        if verbose == 1: print(final_grid)
+        if len(features_game) == 0: continue
+            
+        features_game, labels_game = faw.extract_features_labels(final_grid=final_grid, trackrecord=trackrecord)
+        if len(features) == 0:
+            features = features_game
+            labels = labels_game
+        else:
+            features = np.concatenate((features, features_game), axis=0)
+            labels = np.concatenate((labels, labels_game), axis=0)
+            
+    print("won: ", won, " lost: ", lost)
+    print("Training model on " + str(len(features)) + " instances...")
+    _, model = faw.train_model(model=model, features=features, labels=labels, verbose=verbose)
+    loss, accuracy = faw.evaluate(model=model, features=features, labels=labels)
+    print("loss: ", loss)
+    print("accuracy: ", accuracy)
     
-    while games_counter < games_count: 
-        seed_game = faw.random_initialize_grid()
-        games_counter += faw.create_all_game_grids(seed_grid=seed_game, grid_size=faw.GRID_SIZE, features=features, labels=labels, games_count=games_count)
-        print("games_counter", games_counter)
-    
-    model_name, model = faw.load_model()
-    model_name, model = faw.train_model(model_name=model_name, model=model, features=features, labels=labels, verbose=0)
-    loss, accuracy = faw.evaluate(model_name=model_name, model=model, features=features, labels=labels)
-    print("Loss", loss)
-    print("Accuracy", accuracy)
 
