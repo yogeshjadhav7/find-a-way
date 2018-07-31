@@ -14,7 +14,7 @@ from faw import FindAWay
 faw = FindAWay()
 
 
-# In[3]:
+# In[ ]:
 
 
 N_EPISODES = 100
@@ -35,12 +35,12 @@ for n_episode in range(N_EPISODES):
         (final_grid, _, _)  = trackrecord[len(trackrecord) - 1]
         
         if faw.is_game_won(grid=final_grid): won += 1
-        else lost += 1
+        else: lost += 1
         
         if verbose == 1: print(final_grid)
-        if len(features_game) == 0: continue
-            
         features_game, labels_game = faw.extract_features_labels(final_grid=final_grid, trackrecord=trackrecord)
+        if len(features_game) == 0: continue
+                
         if len(features) == 0:
             features = features_game
             labels = labels_game
