@@ -51,7 +51,7 @@ for n_episode in range(N_EPISODES):
     print("won: ", won, " lost: ", lost)
     print("Training model on " + str(len(features)) + " instances...")
     _, model = faw.train_model(model=model, features=features, labels=labels, verbose=verbose)
-    loss, accuracy = faw.evaluate(model=model, features=features, labels=labels)
+    loss, accuracy = faw.evaluate(model=model, features=features, labels=labels, verbose=verbose)
     print("loss: ", loss)
     print("accuracy: ", accuracy)
     
