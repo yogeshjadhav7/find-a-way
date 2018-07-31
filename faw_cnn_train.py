@@ -18,7 +18,7 @@ faw = FindAWay()
 
 
 N_EPISODES = 100
-N_GAMES_PER_EPISODE = 100
+N_GAMES_PER_EPISODE = 1000
 verbose = 0
 
 for n_episode in range(N_EPISODES):
